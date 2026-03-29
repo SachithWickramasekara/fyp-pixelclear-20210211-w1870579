@@ -7,8 +7,8 @@ import {
   validateImageForUpload,
 } from "@/features/restoration/services/restoration-service"
 
-function isBlobUrl(url: string | null) {
-  return Boolean(url && url.startsWith("blob:"))
+function isBlobUrl(url: string | null): url is string {
+  return url !== null && url.startsWith("blob:")
 }
 
 type RestorationState = {
