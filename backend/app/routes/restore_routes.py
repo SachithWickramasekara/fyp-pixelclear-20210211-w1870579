@@ -6,7 +6,13 @@ from fastapi.responses import JSONResponse
 from app.config import settings
 from app.services.deblur_service import run_deblur
 from app.services.denoise_service import run_denoise
-from app.utils.image_io import ensure_dirs, new_stem, open_rgb_pil, validate_upload
+from app.utils.image_io import (
+    ensure_dirs,
+    new_stem,
+    open_rgb_pil,
+    validate_content_for_restoration,
+    validate_upload,
+)
 
 router = APIRouter(prefix="/api/restore", tags=["restore"])
 
@@ -23,7 +29,8 @@ async def _save_upload(image: UploadFile, dest: Path) -> None:
         if not body:
             raise ValueError("Empty file")
         dest.write_bytes(body)
-        open_rgb_pil(dest)
+        pil = open_rgb_pil(dest)
+        validate_content_for_restoration(pil)
     except ValueError:
         if dest.is_file():
             dest.unlink(missing_ok=True)

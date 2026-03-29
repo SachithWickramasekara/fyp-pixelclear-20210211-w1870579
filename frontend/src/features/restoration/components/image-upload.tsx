@@ -9,6 +9,10 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { ActionButton } from "@/features/restoration/components/action-button"
+import {
+  MAX_UPLOAD_HEIGHT,
+  MAX_UPLOAD_WIDTH,
+} from "@/features/restoration/services/restoration-service"
 import { cn } from "@/lib/utils"
 
 type ImageUploadProps = {
@@ -38,7 +42,7 @@ export function ImageUpload({ onFileSelect, error }: ImageUploadProps) {
         <CardTitle className="text-lg">Upload Your Image</CardTitle>
         <CardDescription>
           Drag and drop a file or use the picker. Only image files are allowed
-          (max 10MB, up to 3840x2160).
+          (max 10MB, up to {MAX_UPLOAD_WIDTH}×{MAX_UPLOAD_HEIGHT}).
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

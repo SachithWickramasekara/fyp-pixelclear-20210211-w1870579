@@ -23,9 +23,9 @@ export interface RestorationService {
 }
 
 export const MAX_UPLOAD_BYTES = 10 * 1024 * 1024
-export const MAX_UPLOAD_WIDTH = 3840
-export const MAX_UPLOAD_HEIGHT = 2160
-export const MAX_UPLOAD_MEGAPIXELS = 8
+export const MAX_UPLOAD_WIDTH = 7680
+export const MAX_UPLOAD_HEIGHT = 4320
+export const MAX_UPLOAD_MEGAPIXELS = 34
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL?.toString().trim() ||
@@ -174,8 +174,21 @@ export const restorationService: RestorationService = {
     if (!res.ok) {
       const msg =
         typeof (data as { message?: unknown } | null)?.message === "string"
-          ? ((data as { message: string }).message as string)
+          ? (data as { message: string }).message
           : `Backend request failed (${res.status})`
+      throw new Error(msg)
+    }
+
+    if (
+      typeof data === "object" &&
+      data !== null &&
+      "success" in data &&
+      (data as { success?: unknown }).success === false
+    ) {
+      const msg =
+        typeof (data as { message?: unknown }).message === "string"
+          ? (data as { message: string }).message
+          : "Restoration failed"
       throw new Error(msg)
     }
 
