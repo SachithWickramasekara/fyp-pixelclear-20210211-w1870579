@@ -21,6 +21,8 @@ htmlcov/
 *.cover
 
 *.pth
+!model/proposed_denoiser_best.pth
+!model/unet_residual_v7_best.pth
 *.pt
 *.ckpt
 
