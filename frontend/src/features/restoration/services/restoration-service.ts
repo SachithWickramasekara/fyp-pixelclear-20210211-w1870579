@@ -187,7 +187,7 @@ export const restorationService: RestorationService = {
     ) {
       const msg =
         typeof (data as { message?: unknown }).message === "string"
-          ? (data as { message: string }).message
+          ? (data as unknown as { message: string }).message
           : "Restoration failed"
       throw new Error(msg)
     }
